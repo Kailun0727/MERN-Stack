@@ -5,14 +5,18 @@
 :root {
   --primary: #1aac83;
   --error: #e7195a;
+  --update: #3498db;
+  --delete: #c0392b;
+  --cancel: #a9a9a9;
 }
 body {
-  background: #f1f1f1;
+  background: #f1f2f2;
   margin: 0;
   font-family: "Poppins";
 }
 header {
-  background: #fff;
+  background: #FFFFFF;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Add box shadow to the bottom */
 }
 header .container {
   max-width: 1400px;
@@ -44,7 +48,7 @@ header a {
   margin: 20px auto;
   padding: 20px;
   position: relative;
-  box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Apply shadow to all borders */
 }
 .workout-details h4 {
   margin: 0 0 10px 0;
@@ -65,4 +69,87 @@ header a {
   padding: 6px;
   border-radius: 50%;
   color: #333;
+}
+
+/* new workout form */
+
+
+
+label, input {
+  display: block;
+}
+input {
+  padding: 10px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Apply shadow to all borders */
+}
+form button {
+  background: var(--primary);
+  border: 0;
+  color: #fff;
+  padding: 10px;
+  font-family: "Poppins";
+  border-radius: 4px;
+  cursor: pointer;
+}
+div.error {
+  padding: 10px;
+  background: #ffefef;
+  border: 1px solid var(--error);
+  color: var(--error);
+  border-radius: 4px;
+  margin: 20px 0;
+}
+input.error {
+  border: 1px solid var(--error);
+}
+
+/* button of workout detail */
+button.update{
+  background: var(--primary);
+  border: 0;
+  color: #fff;
+  padding: 10px;
+  margin:10px;
+  font-family: "Poppins";
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button.delete{
+  background: var(--delete);
+  border: 0;
+  color: #fff;
+  padding: 10px;
+  margin:10px;
+  font-family: "Poppins";
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+
+button.cancel{
+  background: var(--cancel);
+  border: 0;
+  color: #fff;
+  padding: 10px;
+  margin:10px;
+  font-family: "Poppins";
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+form.update {
+  /* Set opacity to 1 to make it visible */
+  opacity: 1;
+  /* Set height to auto to expand the form to its natural height */
+  height: auto;
+
+  /* Add any other transition effects you want, e.g., fading effect */
+  transition: opacity 0.5s ease;
 }
