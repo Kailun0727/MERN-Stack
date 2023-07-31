@@ -1,9 +1,13 @@
 import { useState } from 'react'
 import { useWorkoutsContext } from '../hooks/useWorkoutsContext'
+import { useAuthContext } from '../hooks/useAuthContext'
 
 const WorkoutForm = () => {
   // Get the dispatch function from the global context using the custom hook
   const { dispatch } = useWorkoutsContext()
+
+  // Get the user from the auth context using the custom hook
+  const { user } = useAuthContext()
 
   // State to store the input values and error messages
   const [title, setTitle] = useState('')
@@ -16,6 +20,11 @@ const WorkoutForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
+    if(!user){
+      setError('You must be logged in')
+      return
+    }
+
     // Create a workout object with the form input values
     const workout = { title, load, reps }
     
@@ -24,7 +33,9 @@ const WorkoutForm = () => {
       method: 'POST',
       body: JSON.stringify(workout),
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+          //use `` backtick when want to use variable inside string
+          'Authorization' : `Bearer ${user.token}`
       }
     })
     const json = await response.json()

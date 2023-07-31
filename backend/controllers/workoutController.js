@@ -3,8 +3,13 @@ const mongoose = require('mongoose');
 
 // Get all workouts
 const getWorkouts = async (req, res) => {
-  // Retrieve all workouts from the database and sort them by createdAt in descending order
-  const workouts = await Workout.find({}).sort({ createdAt: -1 });
+   // Get the user_id from the middleware request body
+  const user_id = req.user._id
+
+
+
+  // Retrieve all workouts from the database that belongs to specific "user_id" and sort them by createdAt in descending order
+  const workouts = await Workout.find({ user_id }).sort({ createdAt: -1 });
 
   // Respond with the list of workouts in JSON format
   res.status(200).json(workouts);
@@ -54,7 +59,11 @@ const createWorkout = async (req, res) => {
 
   // If all fields are provided, create a new workout and add it to the database
   try {
-    const workout = await Workout.create({ title, load, reps });
+
+    // Get the user_id from the middleware request body
+    const user_id = req.user._id
+
+    const workout = await Workout.create({ title, load, reps, user_id});
     // Respond with the newly created workout data in JSON format
     res.status(200).json(workout);
   } catch (error) {
@@ -94,10 +103,10 @@ const updateWorkout = async (req, res) => {
   if (!title) {
     emptyField.push('title');
   }
-  if (!load) {
+  if (load === null || load === undefined || load === '') {
     emptyField.push('load');
   }
-  if (!reps) {
+  if (reps === null || reps === undefined || reps === '') {
     emptyField.push('reps');
   }
 

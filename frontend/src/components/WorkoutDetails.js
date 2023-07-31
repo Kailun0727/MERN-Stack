@@ -1,6 +1,7 @@
 import { useWorkoutsContext } from "../hooks/useWorkoutsContext";
 import UpdateForm from "./UpdateForm";
 import { useState } from "react";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 //date-fns
 import formatDistanceToNow from 'date-fns/formatDistanceToNow'
@@ -8,6 +9,9 @@ import formatDistanceToNow from 'date-fns/formatDistanceToNow'
 const WorkoutDetails = ({ workout }) => {
   // State to control whether the UpdateForm should be shown or hidden
   const [showUpdateForm, setShowUpdateForm] = useState(false);
+
+  // Get the user from the auth context using the custom hook
+  const {user} = useAuthContext()
 
   // Get the dispatch function from the global context using the custom hook
   const { dispatch } = useWorkoutsContext();
@@ -26,9 +30,21 @@ const WorkoutDetails = ({ workout }) => {
 
   // Function to handle the "Delete" button click
   const handleDeleteClick = async () => {
+
+    // if user is not logged in, do not continue
+    if(!user){
+      return
+    }
+
+
+
     // Send a DELETE request to the server to delete the workout
     const response = await fetch('api/workouts/' + workout._id, {
-      method: 'DELETE'
+      method: 'DELETE',
+      headers: {
+        //use `` backtick when want to use variable inside string
+        'Authorization' : `Bearer ${user.token}`
+      }
     });
     const json = await response.json();
 

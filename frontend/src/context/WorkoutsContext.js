@@ -1,6 +1,8 @@
 // Import required libraries
 import { createContext, useReducer } from 'react';
 
+
+
 // Create a new Context to hold the workouts state and dispatch function
 export const WorkoutsContext = createContext();
 
