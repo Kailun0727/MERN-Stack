@@ -5,6 +5,7 @@ import { useAuthContext } from './useAuthContext'
 export const useEditProfile = () => {
   // State variables to store error and loading status
   const [error, setError] = useState(null)
+  const [success, setSuccess] = useState(null)
   const [isLoading, setIsLoading] = useState(null)
 
   // Access the dispatch function from the Auth context
@@ -15,6 +16,7 @@ export const useEditProfile = () => {
     // Set loading to true and clear any previous error
     setIsLoading(true)
     setError(null)
+    setSuccess(null)
 
     // Send signup request to the server
     const response = await fetch('/api/user/editProfile', {
@@ -30,6 +32,8 @@ export const useEditProfile = () => {
       setError(json.error)
     }
     if (response.ok) {
+      setSuccess(json.success)
+
       // Save the user data to local storage
       localStorage.setItem('user', JSON.stringify(json))
 
@@ -42,5 +46,5 @@ export const useEditProfile = () => {
   }
 
   // Return the signup function, loading status, and error message
-  return { editProfile, isLoading, error }
+  return { editProfile, isLoading, error , success}
 }

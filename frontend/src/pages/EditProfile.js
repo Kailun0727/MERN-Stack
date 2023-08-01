@@ -8,7 +8,7 @@ const EditProfile = () => {
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
 
-    const {editProfile, error, isLoading}= useEditProfile()
+    const {editProfile, error, success, isLoading}= useEditProfile()
 
     // Function to handle form submission
     const handleSubmit = async (e) => {
@@ -44,6 +44,7 @@ const EditProfile = () => {
             />
             <button className="edit" disabled={isLoading}>Edit</button>
             {error && <div className="error">{error}</div> }
+            {success && <div className="success">{success}</div> }
         </form>
     )
 }

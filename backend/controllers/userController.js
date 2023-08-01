@@ -1,5 +1,4 @@
 
-
 const User = require('../models/UserModel')
 const jwt = require('jsonwebtoken')
 
@@ -56,7 +55,7 @@ const editProfile = async(req,res) =>{
         const token = createToken(user._id)
 
         // Send a success response with the new user's info
-        res.status(200).json({ email: newEmail, token })
+        res.status(200).json({ email: newEmail, token, success: "Update success" })
     } catch (error) {
         // If there's an error during signup, send an error response
         res.status(400).json({ error: error.message })
