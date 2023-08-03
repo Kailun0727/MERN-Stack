@@ -5,6 +5,11 @@ const express = require('express')
 
 const mongoose = require('mongoose')
 
+// Enables CORS for online api call
+const cors = require('cors')
+
+// if use online service to host, need to change the path to required path
+// If using platform like Reder, put /opt/render/project/src/ in front of path
 const workoutRoutes = require('./routes/workouts')
 
 const userRoutes = require('./routes/user')
@@ -12,6 +17,7 @@ const userRoutes = require('./routes/user')
 //express app
 const app = express()
 
+app.use(cors())
 
 //middleware
 app.use(express.json())

@@ -2,13 +2,19 @@ import { useEffect, useState } from "react"
 import { useWorkoutsContext } from "../hooks/useWorkoutsContext"
 import { useAuthContext } from "../hooks/useAuthContext"
 
+
 // Import components
 import WorkoutDetails from "../components/WorkoutDetails"
 import WorkoutForm from "../components/WorkoutForm"
+import SearchBar from "../components/SearchBar"
+import PaginationBar from "../components/PaginationBar"
+import { usePageContext } from "../hooks/usePageContext"
 
 const Home = () => {
   // Access the workouts and dispatch function from the global context using the custom hook
   const { workouts, dispatch } = useWorkoutsContext()
+
+  const {page, dispatch : pageDispatch} = usePageContext()
 
   const [loading, setLoading] = useState(true);
 
@@ -30,9 +36,18 @@ const Home = () => {
       // If the server responds successfully, update the global context with the fetched workouts
       if (response.ok) {
         // Use the 'dispatch' function to set the workouts in the global context
-        dispatch({type: 'SET_WORKOUTS', payload: json})
+        dispatch({type: 'SET_WORKOUTS', payload: json.workouts})
+
+        pageDispatch({ type: 'SET_PAGES', payload: {
+          "currentPage" : json.currentPage,
+          "totalPages" : json.totalPages,
+          "totalWorkouts" : json.totalWorkouts
+        } })
+        
+        
+
         setLoading(false);
-       
+        
       }
     }
 
@@ -40,17 +55,21 @@ const Home = () => {
         // Call the fetchWorkouts function to retrieve workouts when the component mounts
         fetchWorkouts()
         
+        
     }
 
     
-  }, [dispatch, user]) // The 'dispatch' and 'user' dependency ensures the effect runs whenever the dispatch function changes
+  }, [dispatch, user, page, pageDispatch]) // The 'dispatch' and 'user' dependency ensures the effect runs whenever the dispatch function changes
 
   return (
     <div className="home">
       {/* Display all the workout details */}
       <div className="workouts">
         
+      <SearchBar/>
 
+      <h3>Page {page.currentPage} of {page.totalPages}</h3>
+      
       
       {loading ? ( // Check if 'loading' is true, display a loading message
           <h3>Loading...</h3>
@@ -59,10 +78,18 @@ const Home = () => {
           workouts.map(workout => (
             <WorkoutDetails workout={workout} key={workout._id} />
           ))
+            
+         
+
         ) : (// If 'loading' is false but 'workouts' array is empty
           <h3>Try to add some workouts!</h3>// Display a message to encourage adding workouts
         )}
-
+        <PaginationBar
+            currentPage={page.currentPage}
+            totalPages = {page.totalPages}
+           
+        
+        />
       </div>
       {/* Display the form to add new workouts */}
       <WorkoutForm />
