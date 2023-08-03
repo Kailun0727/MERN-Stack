@@ -19,7 +19,7 @@ export const useEditProfile = () => {
     setSuccess(null)
 
     // Send signup request to the server
-    const response = await fetch('/api/user/editProfile', {
+    const response = await fetch('https://mern-stack-backend-n3jh.onrender.com/api/user/editProfile', {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email: user.email, newEmail: email, password, confirmPassword })

@@ -1,5 +1,5 @@
 
-const Workout = require('../models/WorkoutModel');
+const Workout = require('/opt/render/project/src/backend/models/WorkoutModel');
 const mongoose = require('mongoose');
 
 // Get all workouts, supporting pagination and fuzzy search

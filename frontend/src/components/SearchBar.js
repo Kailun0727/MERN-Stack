@@ -1,11 +1,14 @@
 import { useState } from "react";
 import { useSearch } from "../hooks/useSearch";
 import { useAuthContext } from "../hooks/useAuthContext";
+import { usePageContext } from "../hooks/usePageContext";
 
 const SearchBar = () =>{
     const [search, setSearch] = useState('')
 
     const {user} = useAuthContext()
+
+   
 
     const {searchWorkout} = useSearch()
 
@@ -16,10 +19,8 @@ const SearchBar = () =>{
             return
           }
 
-
         await searchWorkout(search)
 
-        console.log('clicked search : '+ search)
     }
 
     return (

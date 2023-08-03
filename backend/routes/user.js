@@ -5,7 +5,7 @@ const {
     signupUser, 
     loginUser,
     editProfile
-  } = require('../controllers/userController')
+  } = require('/opt/render/project/src/backend/controllers/userController')
 
 const router = express.Router()
 

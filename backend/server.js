@@ -10,9 +10,9 @@ const cors = require('cors')
 
 // if use online service to host, need to change the path to required path
 // If using platform like Reder, put /opt/render/project/src/ in front of path
-const workoutRoutes = require('./routes/workouts')
+const workoutRoutes = require('/opt/render/project/src/backend/routes/workouts')
 
-const userRoutes = require('./routes/user')
+const userRoutes = require('/opt/render/project/src/backend/routes/user')
 
 //express app
 const app = express()

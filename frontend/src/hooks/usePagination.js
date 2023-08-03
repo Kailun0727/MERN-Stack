@@ -19,7 +19,7 @@ export const usePagination = () => {
     console.log('Current page is ' + page)
 
     // Define the URL for the API request
-    const url = '/api/workouts?page=' + page
+    const url = 'https://mern-stack-backend-n3jh.onrender.com/api/workouts?page=' + page
 
     // Send a request to the server to get workouts for the selected page
     const response = await fetch(url, {

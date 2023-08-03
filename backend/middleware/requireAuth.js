@@ -1,7 +1,7 @@
 
 
 const jwt = require('jsonwebtoken')
-const User = require('../models/UserModel')
+const User = require('/opt/render/project/src/backend/models/UserModel')
 
 // Middleware function to require authentication for protected routes
 const requireAuth = async (req, res, next) => {

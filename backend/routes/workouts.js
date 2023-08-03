@@ -7,9 +7,9 @@ const {
   createWorkout, 
   deleteWorkout, 
   updateWorkout
-} = require('../controllers/workoutController')
+} = require('/opt/render/project/src/backend/controllers/workoutController')
 
-const requireAuth = require('../middleware/requireAuth')
+const requireAuth = require('/opt/render/project/src/backend/middleware/requireAuth')
 
 const router = express.Router()
 

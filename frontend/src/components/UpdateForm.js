@@ -38,7 +38,7 @@ const UpdateForm = ({ workout , onSuccess}) => {
 
     const updatedWorkout = { ...workout, title, load, reps } // Preserve existing workout ID and other properties
 
-    const response = await fetch(`/api/workouts/${workout._id}`, {
+    const response = await fetch(`https://mern-stack-backend-n3jh.onrender.com/api/workouts/${workout._id}`, {
       method: 'PATCH',
       body: JSON.stringify(updatedWorkout),
       headers: {
