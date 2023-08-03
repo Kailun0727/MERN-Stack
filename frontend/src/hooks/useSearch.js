@@ -17,7 +17,7 @@ export const useSearch = () => {
 
   
     // Send signup request to the server
-    const response = await fetch('https://mern-stack-backend-n3jh.onrender.com/api/workouts?searchQuery='+ searchQuery, {
+    const response = await fetch('https://mern-stack-backend-83vl.onrender.com/api/workouts?searchQuery='+ searchQuery, {
       method: 'GET',
       headers: { 
         'Content-Type': 'application/json',

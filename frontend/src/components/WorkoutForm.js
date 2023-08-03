@@ -34,7 +34,7 @@ const WorkoutForm = () => {
     const workout = { title, load, reps }
 
     // Send a POST request to the server to create a new workout
-    const response = await fetch('https://mern-stack-backend-n3jh.onrender.com/api/workouts', {
+    const response = await fetch('https://mern-stack-backend-83vl.onrender.com/api/workouts', {
       method: 'POST',
       body: JSON.stringify(workout),
       headers: {

@@ -39,7 +39,7 @@ const WorkoutDetails = ({ workout }) => {
 
 
     // Send a DELETE request to the server to delete the workout
-    const response = await fetch('https://mern-stack-backend-n3jh.onrender.com/api/workouts/' + workout._id, {
+    const response = await fetch('https://mern-stack-backend-83vl.onrender.com/api/workouts/' + workout._id, {
       method: 'DELETE',
       headers: {
         //use `` backtick when want to use variable inside string
