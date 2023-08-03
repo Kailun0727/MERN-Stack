@@ -60,7 +60,7 @@ const Home = () => {
     }
 
     
-  }, [dispatch, user, page, pageDispatch]) // The 'dispatch' and 'user' dependency ensures the effect runs whenever the dispatch function changes
+  }, [dispatch, user,pageDispatch]) // The 'dispatch' and 'user' dependency ensures the effect runs whenever the dispatch function changes
 
   return (
     <div className="home">
