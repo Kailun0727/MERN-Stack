@@ -2,19 +2,66 @@
 const Workout = require('../models/WorkoutModel');
 const mongoose = require('mongoose');
 
-// Get all workouts
+// Get all workouts, supporting pagination and fuzzy search
 const getWorkouts = async (req, res) => {
-   // Get the user_id from the middleware request body
+  // Get the user_id from the middleware request body
   const user_id = req.user._id
 
+  // Extract query parameters from the request
+  const { searchQuery, page, pageSize } = req.query
 
+  // Define default values for pagination
+  const pageNumber = parseInt(page) || 1       // Default to page 1 if not provided
+  const itemsPerPage = parseInt(pageSize) || 5 // Default to 5 items per page if not provided
+  const skip = (pageNumber - 1) * itemsPerPage // Calculate the number of items to skip for pagination
 
-  // Retrieve all workouts from the database that belongs to specific "user_id" and sort them by createdAt in descending order
-  const workouts = await Workout.find({ user_id }).sort({ createdAt: -1 });
+  // If searchQuery is provided, perform fuzzy search
+  if (searchQuery) {
+    // Retrieve all workouts that belong to the specific user and sort them by createdAt in descending order
+    let workouts = await Workout.find({ user_id }).sort({ createdAt: -1 })
 
-  // Respond with the list of workouts in JSON format
-  res.status(200).json(workouts);
+    // Create a regular expression for case-insensitive fuzzy search
+    const regex = new RegExp(searchQuery, 'i')
+
+    // Filter the workouts array based on the search query
+    workouts = workouts.filter((workout) => regex.test(workout.title))
+
+     // Check if the workouts array after search is empty
+    if (workouts.length === 0) {
+      return res.status(404).json({ error: 'No such workout' });
+    }
+
+    // Calculate the total number of matching workouts and get the paginated results
+    const totalWorkouts = workouts.length
+    const paginatedWorkouts = workouts.slice(skip, skip + itemsPerPage)
+
+    // Respond with the paginated and searched results in JSON format
+    return res.status(200).json({
+      totalWorkouts,
+      totalPages: Math.ceil(totalWorkouts / itemsPerPage),
+      currentPage: pageNumber,
+      workouts: paginatedWorkouts,
+    })
+  }
+
+  // If no searchQuery, retrieve all workouts and send paginated results
+  const totalWorkoutsCount = await Workout.countDocuments({ user_id })
+  const totalWorkouts = await Workout.find({ user_id }).sort({ createdAt: -1 }).skip(skip).limit(itemsPerPage)
+
+   // Check if the workout no exists
+   if (!totalWorkouts) {
+    return res.status(404).json({ error: 'No such workout' });
+  }
+
+  // Respond with the paginated results in JSON format
+  return res.status(200).json({
+    totalWorkouts: totalWorkoutsCount,
+    totalPages: Math.ceil(totalWorkoutsCount / itemsPerPage),
+    currentPage: pageNumber,
+    workouts: totalWorkouts,
+  })
 };
+
 
 // Get a single workout by ID
 const getWorkout = async (req, res) => {

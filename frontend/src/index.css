@@ -89,6 +89,40 @@ input {
   box-sizing: border-box;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Apply shadow to all borders */
 }
+
+form input.search {
+    height: 40px; /* Set the height for the input */
+    font-family: "Poppins";
+    padding: 10px;
+    
+    width: 50%;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Apply shadow to all borders */
+ 
+}
+
+
+div.search {
+  display: flex;
+ 
+}
+
+.search button {
+  background: var(--primary);
+  border: 0;
+  color: #fff;
+  height: 40px; /* Set the height for the input */
+  margin-left: 20px;
+  padding: 10px;
+  font-family: "Poppins";
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+
 form button {
   background: var(--primary);
   border: 0;
@@ -247,5 +281,25 @@ form button.signup {
 
 h1{
   color: var(--primary);
+}
+
+
+/* pagination */
+.pagination {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.pagination li {
+  display: inline-block;
+  margin: 5px;
+}
+
+/* selected page in different color*/
+.pagination li.active button {
+  border-color: var(--error);
+  color:  var(--error);
+  
 }
 

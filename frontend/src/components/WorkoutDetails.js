@@ -51,6 +51,8 @@ const WorkoutDetails = ({ workout }) => {
     // If the deletion was successful, update the global context by dispatching the DELETE_WORKOUT action
     if (response.ok) {
       dispatch({ type: 'DELETE_WORKOUT', payload: json });
+
+      
     }
   };
 
