@@ -86,6 +86,13 @@ const getWorkout = async (req, res) => {
 
 // Create a new workout
 const createWorkout = async (req, res) => {
+  // Get the user_id from the middleware request body
+  const user_id = req.user._id
+
+  // Define default values for pagination
+  const currentPage =  1       // Default to page 1 
+  const itemsPerPage =  5 // Default to 5 items per page 
+
   const { title, load, reps } = req.body;
 
   // Check which fields are empty, if any, add those fields to the emptyField array
@@ -100,6 +107,10 @@ const createWorkout = async (req, res) => {
     emptyField.push('reps');
   }
 
+  
+
+  const totalWorkoutsCount = await Workout.countDocuments({ user_id })
+
   // If any fields are empty, respond with an error and the emptyField array
   if (emptyField.length > 0) {
     return res.status(400).json({ error: 'Please fill in all the fields', emptyField });
@@ -112,8 +123,15 @@ const createWorkout = async (req, res) => {
     const user_id = req.user._id
 
     const workout = await Workout.create({ title, load, reps, user_id});
+
     // Respond with the newly created workout data in JSON format
-    res.status(200).json(workout);
+    res.status(200).json({
+        totalWorkouts: totalWorkoutsCount,
+        totalPages: Math.ceil(totalWorkoutsCount / itemsPerPage),
+        currentPage: currentPage,
+        workouts: workout
+      }
+      );
   } catch (error) {
     // If there was an error while creating the workout, respond with the error message
     res.status(400).json({ error: error.message });
