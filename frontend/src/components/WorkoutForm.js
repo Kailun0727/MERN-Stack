@@ -57,7 +57,7 @@ const WorkoutForm = () => {
       setError(null)
       setEmptyField([])
       // Update UI by dispatching the CREATE_WORKOUT action with the new workout data
-      dispatch({ type: 'CREATE_WORKOUT', payload: json })
+      dispatch({ type: 'CREATE_WORKOUT', payload: json.workouts })
 
       // Update the page context with the new pagination data
       pageDispatch({
@@ -67,6 +67,14 @@ const WorkoutForm = () => {
           "totalPages": json.totalPages,
           "totalWorkouts": json.totalWorkouts
         }
+      })
+
+      console.log("After added")
+
+      console.log({
+        "currentPage": json.currentPage,
+        "totalPages": json.totalPages,
+        "totalWorkouts": json.totalWorkouts
       })
 
     }
